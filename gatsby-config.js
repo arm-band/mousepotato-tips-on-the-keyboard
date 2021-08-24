@@ -1,15 +1,15 @@
 module.exports = {
-  pathPrefix: "/leonids",
+  pathPrefix: "/",
   siteMetadata: {
-    title: `Leonids`,
+    title: `Mousepotato Tips on the Keyboard`,
     author: {
-      name: `@ry_zou`,
-      summary: `web dev`,
+      name: `Circle`,
+      summary: `A mound built by the accumulation of hyperlinks are like Kowloon.`,
     },
-    description: `A simple, fixed sidebar two columns Gatsby.js blog starter.`,
-    siteUrl: `https://renyuanz.github.io/leonids`,
+    description: `There's room for all God's creatures, right next to my mashed potatoes tips.`,
+    siteUrl: `https://mousepotato-tips-on-the-keyboard.vercel.app`,
     social: {
-      twitter: `ry_zou`,
+      twitter: ``,
     },
     defaultImage: "images/bg.jpeg",
   },
