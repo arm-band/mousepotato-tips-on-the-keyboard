@@ -1,3 +1,11 @@
+console.log(process.env.GATSBY_ACTIVE_ENV, process.env.NODE_ENV)
+const activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV
+if(activeEnv === "development") {
+  require("dotenv").config({
+    path: `.env.${activeEnv}`,
+  })
+}
+
 module.exports = {
   pathPrefix: "/",
   siteMetadata: {
@@ -17,10 +25,10 @@ module.exports = {
     {
       resolve: 'gatsby-source-microcms',
       options: {
-        apiKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        serviceId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        apiKey: process.env.API_KEY,
+        serviceId: process.env.SERVICE_ID,
         apis: [{
-          endpoint: 'XXXXXXXXXXXXXXXXX',
+          endpoint: process.env.APIS_ENDPOINT,
         }],
       },
     },
