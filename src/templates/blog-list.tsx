@@ -15,18 +15,19 @@ type Data = {
       title: string
     }
   }
-  allMarkdownRemark: {
+  allMicrocmsMousepotato: {
     edges: {
       node: {
-        excerpt: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-        fields: {
-          slug: string
-        }
+        id: string
+        keywords: string
+        title: string
+        updatedAt: string
+        slug: string
+        revisedAt: string
+        publishedAt: string
+        date: string
+        createdAt: string
+        body: string
       }
     }[]
   }
@@ -38,7 +39,7 @@ const BlogIndex = ({
   pageContext,
 }: PageProps<Data, PageContext>) => {
   const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
+  const posts = data.allMicrocmsMousepotato.edges
   const { currentPage, numPages } = pageContext
 
   const isFirst = currentPage === 1
@@ -50,25 +51,25 @@ const BlogIndex = ({
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
+        const title = node.title || node.slug
         return (
-          <article key={node.fields.slug}>
+          <article key={node.slug}>
             <header>
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                <Link style={{ boxShadow: `none` }} to={node.slug}>
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small>{node.date}</small>
             </header>
             <section>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
+                  __html: node.keywords,
                 }}
               />
             </section>
@@ -115,22 +116,23 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: $limit
-      skip: $skip
+    allMicrocmsMousepotato(
+        sort: {fields: [date], order: DESC}
+        limit: $limit
+        skip: $skip
     ) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "YYYY/MM/DD")
-            title
-            description
-          }
+          body
+          createdAt
+          date(formatString: "YYYY/MM/DD")
+          id
+          keywords
+          publishedAt
+          revisedAt
+          slug
+          title
+          updatedAt
         }
       }
     }

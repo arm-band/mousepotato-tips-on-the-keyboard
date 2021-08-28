@@ -4,22 +4,27 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `
       {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
+        allMicrocmsMousepotato(sort: {fields: [date], order: DESC}) {
+          totalCount
+          pageInfo {
+            perPage
+            pageCount
+          }
           edges {
             node {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-              }
+              body
+              createdAt
+              date
+              id
+              keywords
+              publishedAt
+              revisedAt
+              slug
+              title
+              updatedAt
             }
           }
         }
@@ -32,26 +37,27 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges
+  const posts = result.data.allMicrocmsMousepotato.edges
 
-  posts.forEach((post, index) => {
+  result.data.allMicrocmsMousepotato.edges.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
 
     createPage({
-      path: post.node.fields.slug,
-      component: blogPost,
+      path: post.node.slug,
+      component: path.resolve('./src/templates/blog-post.js'),
       context: {
-        slug: post.node.fields.slug,
+        slug: post.node.slug,
         previous,
         next,
       },
-    })
-  })
+    });
+  });
 
   // Create blog post list pages
-  const postsPerPage = 5
-  const numPages = Math.ceil(posts.length / postsPerPage)
+  const postsPerPage = result.data.allMicrocmsMousepotato.pageInfo.limit || 10
+  const numPages = Math.ceil(result.data.allMicrocmsMousepotato.totalCount / postsPerPage)
+  console.log(result.data.allMicrocmsMousepotato.totalCount, postsPerPage)
 
   Array.from({ length: numPages }).forEach((_, i) => {
     createPage({
@@ -70,7 +76,7 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === `microcmsMousepotato`) {
     const value = createFilePath({ node, getNode })
     createNodeField({
       name: `slug`,

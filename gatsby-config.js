@@ -15,10 +15,13 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-microcms',
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
+        apiKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        serviceId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        apis: [{
+          endpoint: 'XXXXXXXXXXXXXXXXX',
+        }],
       },
     },
     {

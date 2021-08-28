@@ -6,5 +6,4 @@ categories: [WordPress, PromiseAll]
 comments: false
 ---
 
-- [yosiakatsuki/ys\-npm\-scripts: npm\-scripts サンプル](https://github.com/yosiakatsuki/ys-npm-scripts)
-- [初心者歓迎！ 話題のPostCSSの導入方法からおすすめプラグインまで \- WPJ](https://www.webprofessional.jp/7-postcss-plugins-to-ease-you-into-postcss/)
+- [Promise\.all\(\) \- JavaScript \| MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
