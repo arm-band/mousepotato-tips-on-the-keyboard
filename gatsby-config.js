@@ -1,4 +1,3 @@
-console.log(process.env.GATSBY_ACTIVE_ENV, process.env.NODE_ENV)
 const activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV
 if(activeEnv === "development") {
   require("dotenv").config({
@@ -66,15 +65,72 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-62251910-1`,
+        trackingId: `aaaaa`,
       },
     },
-    `gatsby-plugin-feed`,
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMicrocmsMousepotato } }) => {
+              return allMicrocmsMousepotato.edges.map(edge => {
+                return Object.assign({}, edge.node, {
+                  description: edge.node.keywords,
+                  date: edge.node.date,
+                  url: site.siteMetadata.siteUrl + edge.node.slug,
+                  guid: site.siteMetadata.siteUrl + edge.node.slug,
+                  custom_elements: [{ "content:encoded": edge.node.body }],
+                })
+              })
+            },
+            query: `
+              {
+                allMicrocmsMousepotato(sort: {fields: [date], order: DESC}) {
+                  totalCount
+                  pageInfo {
+                    perPage
+                    pageCount
+                  }
+                  edges {
+                    node {
+                      body
+                      createdAt
+                      date
+                      id
+                      keywords
+                      publishedAt
+                      revisedAt
+                      slug
+                      title
+                      updatedAt
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Mousepotato Tips on the Keyboard's RSS Feed",
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Ryz`,
-        short_name: `Ryz`,
+        name: `Circle`,
+        short_name: `Circle`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
