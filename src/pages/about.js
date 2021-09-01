@@ -23,11 +23,12 @@ const NotFoundPage = ({ data, location }) => {
       <p>何かについて調べた際の参考記事のリンク集やちょっとした Tips を書き留めていきます。</p>
       <h2>名前の由来</h2>
       <ul>
+          <li>keyboard</li>
           <li>mouse potato</li>
           <li>mouse on the keys</li>
           <li>potato tips</li>
       </ul>
-      <p>以上の3つの単語・固有名詞を組み合わせました。</p>
+      <p>以上の4つの単語・固有名詞を組み合わせました。</p>
     </Layout>
   )
 }
