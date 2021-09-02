@@ -60,9 +60,16 @@ const BlogIndex = ({
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.slug}>
-                  {title}
-                </Link>
+                {isFirst && (
+                  <Link style={{ boxShadow: `none` }} to={node.slug}>
+                    {title}
+                  </Link>
+                )}
+                {!isFirst && (
+                  <Link style={{ boxShadow: `none` }} to={`../${node.slug}`}>
+                    {title}
+                  </Link>
+                )}
               </h3>
               <small>{node.date}</small>
             </header>
